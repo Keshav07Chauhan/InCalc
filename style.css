@@ -1,0 +1,25 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html,body{
+    height: 100%;
+    width: 100%;
+}
+
+nav ul{
+    display: flex;
+    color:rgb(208, 168, 245);
+    background-color: rgb(90, 20, 156);
+}
+nav ul li{
+    list-style: none;
+    padding: 10px 20px;
+}
+.flex{
+    display: none;
+}
+.regime_old{
+    display: none;
+}

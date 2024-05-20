@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Income Tax Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- navigation area -->
+    <nav>
+        <ul>
+            <li>LOGO</li>
+            <li>Home</li>
+            <li>About</li>
+            <li>Contact Us</li>
+        </ul>
+    </nav>
+    <!-- end of navbar -->
+    <div class="Regime">
+        <label for="Regime">Tax Regime</label>
+        <select name="Regime" id="Tax_Regime" required>
+            <option value="New">New</option>
+            <option value="Old">Old</option>
+        </select>
+    </div>
+
+    <div class="Tax Payer">
+        <label for="Tax Payer">Tax Payer </label>
+        <select name="Tax Payer" id="Tax_Payer">
+            <option value="Individual">Individual</option>
+            <option value="HUF">HUF</option>
+            <option value="Domestic Company">Domestic Company</option>
+            <option value="Foreign Company">Foreign Company</option>
+        </select>
+    </div>
+
+    <div class="Employer">
+        <label for="Employer">Employer</label>
+        <select name="Employer" id="Employer">
+            <option value="PSU">PSU</option>
+            <option value="Central_Govt.">Central Government</option>
+            <option value="State_Govt.">State Government</option>
+            <option value="Others">Others</option>
+        </select>
+    </div>
+
+    <div class="age">
+        <label for="age">Age of Tax Payer </label>
+        <select name="age" id="age">
+            <option value="<60">less than 60 years</option>
+            <option value="60include-80exclude">from 60 years to less than 80 years</option>
+            <option value=">=80">80 years and more</option>
+        </select>
+    </div>
+
+    <div class="Residential">
+        <label for="Residential">Residential Status </label>
+        <select name="Residential" id="Residential">
+            <option value="choose option">Choose</option>
+            <option value="Resident">Resident</option>
+            <option value="Not Oridary Resident">Not Oridary Resident</option>
+            <option value="Non-Resident">Non-Resident</option>
+        </select>
+    </div>
+
+    <!-- Income area -->
+    <div class="income">
+
+        <div class="salary">
+            <label>Income from Salary </label>
+            <input type="text" id="inp1" onkeypress="return event.charCode >= 48 && event.charCode <= 57" onblur="tax_calc()">
+        </div>
+
+        <div class="house_property">
+            <label>Income From House Property</label>
+            <button class="button">Show Details</button>
+            <input type="text" id="house_id" readonly>
+            <div class="flex">
+                <div class="regime_old">
+                    <label for="">a. From Self-occupied Property</label>
+                    <div>
+                        <label for="">Interest on Housing Loan</label>
+                        <input type="text" id="house_a_id"
+                            onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                            onblur="income_house_property(),tax_calc()">
+                    </div>
+                </div>
+                <div>
+                    <label for="">b. From Let-out Property</label>
+                    <div>
+                        <label for="">1. Annual Letable Value/Rent Received or Receivable</label>
+                        <input type="text" id="house_b_1_id"
+                            onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                            onblur="income_house_property(),tax_calc()">
+                    </div>
+                    <div>
+                        <label for="">2. Municipal Taxes Paid During the Year</label>
+                        <input type="text" id="house_b_2_id"
+                            onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                            onblur="income_house_property(),tax_calc()">
+                    </div>
+                    <div>
+                        <label for="">3. Unrealized Rent</label>
+                        <input type="text" id="house_b_3_id"
+                            onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                            onblur="income_house_property(),tax_calc()">
+                    </div>
+                    <div>
+                        <label for="">4. Standard Deduction @ 30% of (1-2-3)</label>
+                        <input type="text" id="house_b_4_id" readonly>
+                    </div>
+                    <div>
+                        <label for="">5. Interest on Housing Loan</label>
+                        <input type="text" id="house_b_5_id"
+                            onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                            onblur="income_house_property(),tax_calc()">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="capital_gains">
+            <label>Capital Gains</label>
+            <button class="button">Show Details</button>
+            <input type="text" id="cap_inp" readonly>
+            <div class="flex">
+                <div>
+                    <label for="STCGs@normal">Short Term Capital GainS (Other than covered under section 111A)</label>
+                    <div class="capital_gains_flex">
+                        <div>
+                            <label for="time">From 01/04/2023 to 15/06/2023</label>
+                            <input type="text" id="cap_inp_short_normal_1"
+                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                onblur="short_term_capital_normal(),tax_calc()">
+                        </div>
+                        <div>
+                            <label for="time">From 16/06/2023 to 15/09/2023</label>
+                            <input type="text" id="cap_inp_short_normal_2"
+                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                onblur="short_term_capital_normal(),tax_calc()">
+                        </div>
+                        <div>
+                            <label for="time">From 16/09/2023 to 15/12/2023</label>
+                            <input type="text" id="cap_inp_short_normal_3"
+                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                onblur="short_term_capital_normal(),tax_calc()">
+                        </div>
+                        <div>
+                            <label for="time">From 16/12/2023 to 15/03/2024</label>
+                            <input type="text" id="cap_inp_short_normal_4"
+                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                onblur="short_term_capital_normal(),tax_calc()">
+                        </div>
+                        <div>
+                            <label for="time">From 16/03/2024 to 31/03/2024</label>
+                            <input type="text" id="cap_inp_short_normal_5"
+                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                onblur="short_term_capital_normal(),tax_calc()">
+                        </div>
+                        <div>
+                            <label for="total">Total</label>
+                            <input type="text" id="cap_inp_short_normal_total" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label for="STCGs@15">Short Term Capital GainS (Covered under section 111A)</label>
+                    <div class="capital_gains_flex">
+                        <div>
+                            <label for="time">From 01/04/2023 to 15/06/2023</label>
+                            <input type="text" id="cap_inp_short_15%_1"
+                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                onblur="short_term_capital_15pct(),tax_calc()">
+                        </div>
+                        <div>
+                            <label for="time">From 16/06/2023 to 15/09/2023</label>
+                            <input type="text" id="cap_inp_short_15%_2"
+                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                onblur="short_term_capital_15pct(),tax_calc()">
+                        </div>
+                        <div>
+                            <label for="time">From 16/09/2023 to 15/12/2023</label>
+                            <input type="text" id="cap_inp_short_15%_3"
+                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                onblur="short_term_capital_15pct(),tax_calc()">
+                        </div>
+                        <div>
+                            <label for="time">From 16/12/2023 to 15/03/2024</label>
+                            <input type="text" id="cap_inp_short_15%_4"
+                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                onblur="short_term_capital_15pct(),tax_calc()">
+                        </div>
+                        <div>
+                            <label for="time">From 16/03/2024 to 31/03/2024</label>
+                            <input type="text" id="cap_inp_short_15%_5"
+                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                onblur="short_term_capital_15pct(),tax_calc()">
+                        </div>
+                        <div>
+                            <label for="total">Total</label>
+                            <input type="text" id="cap_inp_short_15%_total" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label for="LTCGs@20">Long Term Capital Gains (Charged to tax @ 20%)</label>
+                    <div class="capital_gains_flex">
+                        <div>
+                            <label for="time">From 01/04/2023 to 15/06/2023</label>
+                            <input type="text" id="cap_inp_long_20%_1"
+                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                onblur="long_term_capital_20pct(),tax_calc()">
+                        </div>
+                        <div>
+                            <label for="time">From 16/06/2023 to 15/09/2023</label>
+                            <input type="text" id="cap_inp_long_20%_2"
+                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                onblur="long_term_capital_20pct(),tax_calc()">
+                        </div>
+                        <div>
+                            <label for="time">From 16/09/2023 to 15/12/2023</label>
+                            <input type="text" id="cap_inp_long_20%_3"
+                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                onblur="long_term_capital_20pct(),tax_calc()">
+                        </div>
+                        <div>
+                            <label for="time">From 16/12/2023 to 15/03/2024</label>
+                            <input type="text" id="cap_inp_long_20%_4"
+                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                onblur="long_term_capital_20pct(),tax_calc()">
+                        </div>
+                        <div>
+                            <label for="time">From 16/03/2024 to 31/03/2024</label>
+                            <input type="text" id="cap_inp_long_20%_5"
+                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                onblur="long_term_capital_20pct(),tax_calc()">
+                        </div>
+                        <div>
+                            <label for="total">Total</label>
+                            <input type="text" id="cap_inp_long_20%_total" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label for="LTCGs@10">Long Term Capital Gains (Charged to tax @ 10%)</label>
+                    <div class="capital_gains_flex">
+                        <div>
+                            <label for="time">From 01/04/2023 to 15/06/2023</label>
+                            <input type="text" id="cap_inp_long_10%_1"
+                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                onblur="long_term_capital_10pct(),tax_calc()">
+                        </div>
+                        <div>
+                            <label for="time">From 16/06/2023 to 15/09/2023</label>
+                            <input type="text" id="cap_inp_long_10%_2"
+                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                onblur="long_term_capital_10pct(),tax_calc()">
+                        </div>
+                        <div>
+                            <label for="time">From 16/09/2023 to 15/12/2023</label>
+                            <input type="text" id="cap_inp_long_10%_3"
+                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                onblur="long_term_capital_10pct(),tax_calc()">
+                        </div>
+                        <div>
+                            <label for="time">From 16/12/2023 to 15/03/2024</label>
+                            <input type="text" id="cap_inp_long_10%_4"
+                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                onblur="long_term_capital_10pct(),tax_calc()">
+                        </div>
+                        <div>
+                            <label for="time">From 16/03/2024 to 31/03/2024</label>
+                            <input type="text" id="cap_inp_long_10%_5"
+                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                onblur="long_term_capital_10pct(),tax_calc()">
+                        </div>
+                        <div>
+                            <label for="total">Total</label>
+                            <input type="text" id="cap_inp_long_10%_total" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label for="LTCGs_112A@10">Long Term Capital GainS (Covered under section 112A)</label>
+                    <div class="capital_gains_flex">
+                        <div>
+                            <label for="time">From 01/04/2023 to 15/06/2023</label>
+                            <input type="text" id="cap_inp_long_112A_10%_1"
+                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                onblur="long_term_capital_112A_10pct(),tax_calc()">
+                        </div>
+                        <div>
+                            <label for="time">From 16/06/2023 to 15/09/2023</label>
+                            <input type="text" id="cap_inp_long_112A_10%_2"
+                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                onblur="long_term_capital_112A_10pct(),tax_calc()">
+                        </div>
+                        <div>
+                            <label for="time">From 16/09/2023 to 15/12/2023</label>
+                            <input type="text" id="cap_inp_long_112A_10%_3"
+                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                onblur="long_term_capital_112A_10pct(),tax_calc()">
+                        </div>
+                        <div>
+                            <label for="time">From 16/12/2023 to 15/03/2024</label>
+                            <input type="text" id="cap_inp_long_112A_10%_4"
+                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                onblur="long_term_capital_112A_10pct(),tax_calc()">
+                        </div>
+                        <div>
+                            <label for="time">From 16/03/2024 to 31/03/2024</label>
+                            <input type="text" id="cap_inp_long_112A_10%_5"
+                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                onblur="long_term_capital_112A_10pct(),tax_calc()">
+                        </div>
+                        <div>
+                            <label for="total">Total</label>
+                            <input type="text" id="cap_inp_long_112A_10%_total" readonly>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="other_sources">
+            <label>Income From Other Sources</label>
+            <button class="button">Show Details</button>
+            <input type="text" id="income_other_sources" readonly>
+            <div class="flex">
+                <div>
+                    <label for="interest">interest</label>
+                    <input type="text" id="interest1" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                        onblur="other_sources(),tax_calc()">
+                </div>
+                <div>
+                    <label for="commission">Commission/Other Income</label>
+                    <input type="text" id="commission1" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                        onblur="other_sources(),tax_calc()">
+                </div>
+                <div>
+                    <label for="lottery">Winnings from Lottery, Crossword Puzzles, etc.</label>
+                    <input type="text" id="lottery1" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                        onblur="other_sources(),tax_calc()">
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- end of income area -->
+
+    <!-- deduction area -->
+    <div class="deduction">
+        <div>
+            <label for="deduction">Deduction</label>
+            <button class="button">Show Details</button>
+            <input type="text" id="toal_deductions" readonly>
+        </div>
+        <div class="flex">
+            <div class="regime_old">
+                <label for="">(u/s 80C)</label>
+                <input type="text" id="80C" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                    onblur="total_deduction(),tax_calc()">
+            </div>
+            <div class="regime_old">
+                <label for="">(u/s 80CCC)</label>
+                <input type="text" id="80CCC" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                    onblur="total_deduction(),tax_calc()">
+            </div>
+            <div class="regime_old">
+                <label for="">(u/s 80CCD(1))</label>
+                <input type="text" id="80CCD(1)" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                    onblur="total_deduction(),tax_calc()">
+            </div>
+            <div class="regime_old">
+                <label for="">(u/s 80CCD(1B))</label>
+                <input type="text" id="80CCD(1B)" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                    onblur="total_deduction(),tax_calc()">
+            </div>
+            <div>
+                <label for="">(u/s 80CCD(2))</label>
+                <input type="text" id="80CCD(2)" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                    onblur="total_deduction(),tax_calc()">
+            </div>
+            <div>
+                <label for="">(u/s 80CCH)</label>
+                <input type="text" id="80CCH" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                    onblur="total_deduction(),tax_calc()">
+            </div>
+            <div class="regime_old"><!--here I have used internal link to go from deductions to their information-->
+                <label for=""><a href="#a">(u/s 80D)</a></label>
+                <input type="text" id="80D" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                    onblur="total_deduction(),tax_calc()">
+            </div>
+            <div class="regime_old">
+                <label for="">(u/s 80DD)</label>
+                <input type="text" id="80DD" readonly>
+                <label for="">Tick if 80DD is claimed</label>
+                <input type="checkbox" id="80DD_less" onchange="total_deduction(),tax_calc()">
+                <!--i have used onchange but not onblur because i need to shift the focus after clicking on the checkbox.So, i have used onchange which shows the output just after clicking the checkbox.-->
+                <label for="">Tick if severe disability</label>
+                <input type="checkbox" id="80DD_more" onchange="total_deduction(),tax_calc()">
+                <!--i have used onchange but not onblur because i need to shift the focus after clicking on the checkbox.So, i have used onchange which shows the output just after clicking the checkbox.-->
+            </div>
+            <div class="regime_old">
+                <label for="">(u/s 80DDB)</label>
+                <input type="text" id="80DDB" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                    onblur="total_deduction(),tax_calc()">
+            </div>
+            <div class="regime_old">
+                <label for="">(u/s 80E)</label>
+                <input type="text" id="80E" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                    onblur="total_deduction(),tax_calc()">
+            </div>
+            <div class="regime_old">
+                <label for="">(u/s 80EE)</label>
+                <input type="text" id="80EE" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                    onblur="total_deduction(),tax_calc()">
+            </div>
+            <div class="regime_old">
+                <label for="">(u/s 80EEA)</label>
+                <input type="text" id="80EEA" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                    onblur="total_deduction(),tax_calc()">
+            </div>
+            <div class="regime_old">
+                <label for="">(u/s 80EEB)</label>
+                <input type="text" id="80EEB" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                    onblur="total_deduction(),tax_calc()">
+            </div>
+            <div class="regime_old">
+                <label for="">(u/s 80TTA)</label>
+                <input type="text" id="80TTA" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                    onblur="total_deduction(),tax_calc()">
+            </div>
+            <div class="regime_old">
+                <label for="">(u/s 80TTB)</label>
+                <input type="text" id="80TTB" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                    onblur="total_deduction(),tax_calc()">
+            </div>
+            <div class="regime_old">
+                <label for="">(u/s 80U)</label>
+                <input type="text" id="80U" readonly>
+                <label for="">Tick if 80U is claimed</label>
+                <input type="checkbox" id="80U_less" onchange="total_deduction(),tax_calc()">
+                <!--i have used onchange but not onblur because i need to shift the focus after clicking on the checkbox.So, i have used onchange which shows the output just after clicking the checkbox.-->
+                <label for="">Tick if severe disability</label>
+                <input type="checkbox" id="80U_more" onchange="total_deduction(),tax_calc()">
+                <!--i have used onchange but not onblur because i need to shift the focus after clicking on the checkbox.So, i have used onchange which shows the output just after clicking the checkbox.-->
+            </div>
+            <div class="regime_old">
+                <label for="">Any other deductions</label>
+                <input type="text" id="Any_other_deductions"
+                    onkeypress="return event.charCode >= 48 && event.charCode <= 57" onblur="total_deduction(),tax_calc()">
+            </div>
+        </div>
+    </div>
+    <!-- end of deduction area -->
+
+    <!-- net taxable income -->
+    <div class="net_taxable_income">
+        <label for="net_taxable_income">Net Taxable Income</label>
+        <input type="text" id="netTaxableIncome" readonly>
+    </div>
+    <!-- end of net taxable income -->
+
+    <!-- tax from income area -->
+    <div class="taxing">
+        <div>
+            <label for="">Income Liable to Tax at Normal Rate ---</label>
+            <input type="text" id="tax_Income_Liable_1" readonly>
+            <input type="text" id="tax_Income_Liable_2" readonly>
+        </div>
+        <div>
+            <label for="">Short Term Capital Gains (Covered u/s 111A) 15%</label>
+            <input type="text" id="tax_STCGs@15%_1" readonly>
+            <input type="text" id="tax_STCGs@15%_2" readonly>
+        </div>
+        <div>
+            <label for="">Long Term Capital Gains (Charged to tax @ 20%) 20%</label>
+            <input type="text" id="tax_LTCGs@20%_1" readonly>
+            <input type="text" id="tax_LTCGs@20%_2" readonly>
+        </div>
+        <div>
+            <label for="">Long Term Capital Gains (Charged to tax @ 10%) 10%</label>
+            <input type="text" id="tax_LTCGs@10%_1" readonly>
+            <input type="text" id="tax_LTCGs@10%_2" readonly>
+        </div>
+        <div>
+            <label for="">Long Term Capital Gains (Covered u/s 112A) 10%</label>
+            <input type="text" id="tax_LTCGs_112A@10%_1" readonly>
+            <input type="text" id="tax_LTCGs_112A@10%_2" readonly>
+        </div>
+        <div>
+            <label for="">Winnings from Lottery, Crossword Puzzles, etc @ 30%</label>
+            <input type="text" id="tax_Lottery_1" readonly>
+            <input type="text" id="tax_Lottery_2" readonly>
+        </div>
+    </div>
+    <!-- end of total tax liability -->
+
+
+    <br><br>
+    <!-- Information regarding deductions -->
+    <div class="information_of_deductions">
+        <div>
+            <h3>80C</h3>
+            <ul>
+                <li>Life Insurance Premium</li>
+                <li>Provident Fund</li>
+                <li>Subscription to certain equity shares</li>
+                <li>Tuition Fees</li>
+                <li>National Savings Certificate</li>
+                <li>Housing Loan Principal</li>
+                <li>Other various items</li>
+            </ul>
+        </div>
+        <div>
+            <h3>80CCC</h3>
+            <p>Annuity plan of LIC or other insurer towards Pension Scheme</p>
+        </div>
+        <div>
+            <h3>80CCD(1)</h3>
+            <p>Pension Scheme of Central Government</p>
+        </div>
+        <div>
+            <h3>80CCD(1B)</h3>
+            <p>Deduction towards payments made to Pension Scheme of Central Government, excluding deduction claimed
+                under 80CCD (1)</p>
+        </div>
+        <div>
+            <h3>80CCD(2)</h3>
+            <p>Deduction towards contribution made by an employer to the Pension Scheme of Central Government</p>
+        </div>
+        <div>
+            <h3>80CCH</h3>
+            <p>Deduction in respect of contribution to Agnipath Scheme</p>
+        </div>
+        <div>
+            <h3>80D</h3>
+            <p>Deduction towards payments made to Health Insurance Premium & Preventive Health check up</p>
+        </div>
+        <div>
+            <h3>80DD</h3>
+            <p>Deduction towards payments made towards maintenance or medical treatment of a Disabled Dependent or Paid
+                / Deposited any amount under relevant approved scheme</p>
+        </div>
+        <div>
+            <h3>80DDB</h3>
+            <p>Deduction towards payments made towards Medical treatment of Self or Dependant for specified diseases</p>
+        </div>
+        <div>
+            <h3>80E</h3>
+            <p>Deduction towards interest payments made on loan for higher education of Self or relative</p>
+        </div>
+        <div>
+            <h3>80EE</h3>
+            <p>Deduction towards interest payments made on loan taken for acquisition of residential house property
+                where the loan is sanctioned between 1st April 2016 to 31st March 2017</p>
+        </div>
+        <div>
+            <h3>80EEA</h3>
+            <p>Deduction available only to individuals towards interest payments made on loan taken for acquisition of
+                residential house property for the first time where the loan is sanctioned between 1st April 2019 to
+                31st March 2022 & deduction should not have been claimed u/s 80EE</p>
+        </div>
+        <div>
+            <h3>80EEB</h3>
+            <p>Deduction towards interest payments made on loan for purchase of Electric Vehicle where the loan is
+                sanctioned between 1st April 2019 to 31st March 2023</p>
+        </div>
+        <!-- <div>
+            <h3>80G</h3>
+            <p>Deduction towards Donations made to prescribed Funds, Charitable Institutions, etc.</p>
+        </div>
+        <div>
+            <h3>80GG</h3>
+            <p>Deduction towards rent paid for house & applicable to only those who are self-employed or for whom HRA is
+                not part of Salary</p>
+        </div>
+        <div>
+            <h3>80GGA</h3>
+            <p>Deduction towards Donations made for Scientific Research or Rural Development</p>
+        </div>
+        <div>
+            <h3>80GGC</h3>
+            <p>Deduction towards Donations made to Political Party or Electoral Trust</p>
+        </div> -->
+        <div>
+            <h3>80TTA</h3>
+            <p>Deduction on interest received on saving bank accounts by Non-Senior Citizens</p>
+        </div>
+        <div>
+            <h3>80TTB</h3>
+            <p>Deduction on interest received on deposits by Resident Senior Citizens</p>
+        </div>
+        <div>
+            <h3>80U</h3>
+            <p>Deductions for a resident individual taxpayer with Disability</p>
+        </div><br><br><br>
+        <div>
+            <h3>deduction limit</h3>
+            <p>80C, 80CCC, 80CCD(1) -> 1,50,000</p>
+            <p>80CCD(1B) -> 50,000</p>
+            <p>80CCD(2) ->
+                #If the Employer is a PSU or Others -> 10% of salary#
+                #If the Employer is Central or State Government -> 14% of salary#
+            </p>
+            <p>80CCH -> full</p>
+            <p id="a">80D ->
+                #For Self / Spouse or Dependent Children -> ₹ 25,000 (₹ 50,000 if any person is a Senior Citizen)#
+                #For Parents -> ₹ 25,000 (₹ 50,000 if any person is a Senior Citizen)#
+                #Deduction towards Medical Expenditure incurred on a Senior Citizen, if no premium is paid on health
+                insurance coverage#
+            </p>
+            <p>80DD ->
+                #Flat deduction of ₹ 75,000#
+                #Flat deduction of ₹ 1,25,000, if the person has Severe Disability (80% or more)#
+            </p>
+            <p>80DDB -> Deduction limit of ₹40,000(₹ 1,00,000 if Senior Citizen)</p>
+            <p>80E -> Total amount paid towards interest on loan taken</p>
+            <p>80EE -> Deduction limit of ₹50,000 on the interest paid on loan taken</p>
+            <p>80EEA -> Deduction limit of ₹1,50,000 on the interest paid on loan taken and <b>either 80EE or 80EEA</b>
+            </p>
+            <p>80EEB -> Deduction limit of ₹1,50,000 on the interest paid on loan taken</p>
+            <!-- <p>80G -> full & upto 2000 if it is in cash</p>
+            <p>80GG -> least among these:-
+            <ul>
+                <li>rent paid - 10% of total income before this deduction</li>
+                <li>₹5,000 per month</li>
+                <li>25% of Total Income (excluding long term capital gains, short term capital gains under section 111A
+                    or income under section 115A or 115D)</li>
+            </ul>
+            </p>
+            <p>80GGA -> </p>
+            <p>80GGC -> full</p> -->
+            <p>80TTA -> Deduction limit of ₹10,000/-</p>
+            <p>80TTB -> Deduction limit of ₹50,000/- and <b>either 80TTA or 80TTB</b></p>
+            <p>80U ->
+                #Flat deduction of ₹ 75,000#
+                #Flat deduction of ₹ 1,25,000, if the person has Severe Disability (80% or more)#
+            </p>
+        </div>
+    </div>
+
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>
