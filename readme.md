@@ -30,7 +30,7 @@ This project is an Income Tax Calculator designed to help individuals estimate t
    - Use the `git clone` command followed by the repository URL to clone the repository to your local machine.
 
     Example:
-    ``` bash
+    ```bash
     git clone https://github.com/your_username/repository-name.git
     ```
 
